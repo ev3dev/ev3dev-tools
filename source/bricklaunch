@@ -1,0 +1,76 @@
+#!/bin/sh
+#
+# bricklaunch.sh <ops> <program>
+# - open a new vt and switch to it
+# - give 'user' ownership of the vt
+# - run the given programm on the new vt as 'user'
+#
+
+OPTIND=1
+user='user'
+openvt_opts=""
+rm_ttyfile=0
+
+function show_help {
+  cat <<END_OF_HELP
+bricklaunch.sh <opts> <program>
+
+  -h        this help
+  -s        switch to the new virtual terminal
+  -t <file> file to write the path of the new tty to
+  -u <user> user to run the program under
+  -w        wait for the program to finish
+END_OF_HELP
+  exit 2
+}
+
+while getopts "tu:swh" opt; do
+    case "$opt" in
+    s)  openvt_opts="$openvt_opts --switch"
+        ;;
+    t)  ttyfile=$OPTARG
+        ;;
+    u)  user=$OPTARG
+        ;;
+    w)  openvt_opts="$openvt_opts --wait"
+        ;;
+    h)  show_help
+        ;;
+    \?) show_help
+        ;;
+    esac
+done
+
+shift $((OPTIND-1))
+
+[ "$1" = "--" ] && shift
+
+if [ $# == 0 ]; then
+  echo >&2 "Missing program argument."
+  exit 1
+fi  
+
+if [ "$ttyfile" != "" ]; then
+  if [ -e "$ttyfile" -a ! -w "$ttyfile" ]; then
+    echo >&2 "File $ttyfile already exists, but is not writable."
+    exit 1
+  fi
+  ttyfiledir=`dirname "$ttyfile"`
+  if [ ! -d "$ttyfiledir" ]; then
+    echo >&2 "Dir $ttyfiledir does not exist."
+    exit 1
+  fi
+  if [ ! -w "$ttyfiledir"]; then
+    echo >&2 "Dir $ttyfiledir is not writable."
+    exit 1
+  fi
+else
+  ttyfile=$(mktemp)
+  rm_ttyfile=1
+fi
+
+/bin/openvt $openvt_opts -- \
+  /bin/bash -c "/usr/bin/tty >${ttyfile};/bin/chown ${user}: \$(/bin/cat ${ttyfile});/usr/bin/sudo --login --set-home --non-interactive --user=${user} -- \"$@\" || sleep 5s"
+
+[ "$rm_ttyfile" = "1" ] && rm "$ttyfile"
+
