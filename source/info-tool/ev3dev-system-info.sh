@@ -5,6 +5,14 @@ if [ "$1" == '--help' ]; then
   exit
 fi
 
+get_ev3dev_release() {
+  if [ -e /etc/ev3dev_release ]; then
+    head -n 1 -q  /etc/ev3dev_release
+  else
+    echo "** Pre-2016 release **"
+  fi
+}
+
 get_colon_separated_file_prop () {
   target_line=$(grep -m1 ^"$2" "$1")
   echo "${target_line##*: }"
@@ -24,6 +32,7 @@ print_val() {
   printf "%-20s%s\n" "$1: " "$2"
 }
 
+print_val "Image file" "$(get_ev3dev_release)"
 print_val "Kernel version" "$(uname -r)"
 
 if [ -f /proc/device-tree/model ]; then
