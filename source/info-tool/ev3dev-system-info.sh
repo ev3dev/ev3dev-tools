@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 
-if [ "$1" == '--help' ]; then
-  echo "ev3dev system info tool. Prints common platform information for use in reporting issues."
-  exit
-fi
+FORMAT_MARKDOWN="false"
+case "$1" in
+  -h|--help)
+    echo "ev3dev system info tool. Prints common platform information for use in reporting issues."
+    echo "Use \"ev3dev-sysinfo -m\" to format for GitHub markdown"
+    exit
+    ;;
+  -m|--markdown)
+    FORMAT_MARKDOWN=true
+    ;;
+esac
 
 get_ev3dev_release() {
   if [ -e /etc/ev3dev_release ]; then
@@ -32,6 +39,28 @@ print_val() {
   printf "%-20s%s\n" "$1: " "$2"
 }
 
+print_fence_if_markdown() {
+  if [ "$FORMAT_MARKDOWN" = "true" ]; then
+    echo '```'
+  fi
+}
+
+print_title_if_markdown() {
+  if [ "$FORMAT_MARKDOWN" = "true" ]; then
+    echo "**System info (from \`ev3dev-sysinfo\`)**" 
+  fi
+}
+
+print_copy_line_if_markdown() {
+  if [ "$FORMAT_MARKDOWN" = "true" ]; then
+    echo "<!-- Copy everything between these lines -->" 
+  fi
+}
+
+print_copy_line_if_markdown
+print_title_if_markdown
+print_fence_if_markdown
+
 print_val "Image file" "$(get_ev3dev_release)"
 print_val "Kernel version" "$(uname -r)"
 
@@ -44,3 +73,6 @@ fi
 print_val "Revision" "$(get_colon_separated_file_prop /proc/cpuinfo 'Revision')"
 print_val "Brickman" "$(get_package_version brickman)"
 print_val "ev3devKit" "$(get_package_version_with_wildcard ev3devkit-\*)"
+
+print_fence_if_markdown
+print_copy_line_if_markdown
