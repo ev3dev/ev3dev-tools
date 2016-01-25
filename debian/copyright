@@ -4,6 +4,10 @@ Files: debian/*
 Copyright: 2016 David Lechner <david@lechnology.com>
 License: GPL-3.0+
 
+Files: source/info-tool/*  
+Copyright: 2016 Kaelin Laundry <wasabifan@outlook.com>  
+License: GPL-3.0+  
+
 License: GPL-3.0+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
