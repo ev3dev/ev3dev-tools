@@ -13,4 +13,6 @@ Architecture: all
 Depends: ${misc:Depends}
 Description: Miscellaneous tools for ev3dev
  A collection of tools for ev3dev.
+ * ev3dev-config: A graphical command line utility to help with basic system
+   administration.
  * ev3dev-sysinfo: Command line utility to display system information.
