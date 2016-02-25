@@ -1,1 +1,1 @@
-source/info-tool/ev3dev-system-info.sh /usr/share/ev3dev-tools
+source/scripts/* /usr/share/ev3dev-tools

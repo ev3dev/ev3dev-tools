@@ -47,13 +47,13 @@ print_fence_if_markdown() {
 
 print_title_if_markdown() {
   if [ "$FORMAT_MARKDOWN" = "true" ]; then
-    echo "**System info (from \`ev3dev-sysinfo\`)**" 
+    echo "**System info (from \`ev3dev-sysinfo\`)**"
   fi
 }
 
 print_copy_line_if_markdown() {
   if [ "$FORMAT_MARKDOWN" = "true" ]; then
-    echo "<!-- Copy everything between these lines -->" 
+    echo "<!-- Copy everything between these lines -->"
   fi
 }
 
