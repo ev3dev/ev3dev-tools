@@ -141,7 +141,9 @@ detect_current_platform() {
   fi
   
   device_tree_model="$(cat $DEVICE_TREE_MODEL_FILE)"
-  if [[ "$device_tree_model" == "Raspberry Pi"* ]]; then
+  if [[ "$device_tree_model" == "LEGO MINDSTORMS EV3"* ]]; then
+    echo "brick"
+  elif [[ "$device_tree_model" == "Raspberry Pi"* ]]; then
     echo "raspi"
   elif [[ "$device_tree_model" == "TI AM335x BeagleBone"* ]]; then
     echo "beagle"
