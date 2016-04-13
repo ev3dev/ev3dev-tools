@@ -267,6 +267,11 @@ do_hardware_menu() {
   current_platform=$(detect_current_platform)
   get_available_hardware_options "$current_platform"
   
+  if [ ${#HARDWARE_MENU_OPTIONS[@]} -eq 0 ]; then
+    whiptail --msgbox "There are no hardware options for your platform." 20 60 1
+    return 0
+  fi
+  
   FUN=$(whiptail --title "$MENU_TITLE" --menu "Hardware Configuration" --backtitle "$MENU_BACKTITLE" $WT_HEIGHT $WT_WIDTH $WT_MENU_HEIGHT --cancel-button Back --ok-button Select \
     "${HARDWARE_MENU_OPTIONS[@]}" \
     3>&1 1>&2 2>&3)
