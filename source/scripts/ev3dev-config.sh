@@ -336,8 +336,26 @@ configure_in1_serial() {
   
   if [ "$enable_kernel_messages" = false ] && [ "$enable_shell" = false ]; then
     comment_line "$MODPROBE_EV3_CONF" "$DISABLE_IN_PORT_LINE"
+
+    # remove console=ttyS1,115200n8 from the kernel command line
+    if grep -q '^LINUX_KERNEL_CMDLINE=".*console=ttyS1,115200n8.*"' \
+      /etc/default/flash-kernel
+    then
+      sed -i 's/^\(LINUX_KERNEL_CMDLINE=".*\)\s\+console=ttyS1,115200n8\(.*"\)/\1\2/' \
+        /etc/default/flash-kernel
+      flash-kernel
+    fi
   else
     uncomment_line "$MODPROBE_EV3_CONF" "$DISABLE_IN_PORT_LINE"
+
+    # add console=ttyS1,115200n8 to the kernel command line
+    if ! grep -q '^LINUX_KERNEL_CMDLINE=".*console=ttyS1,115200n8.*"' \
+        /etc/default/flash-kernel
+    then
+      sed -i 's/^\(LINUX_KERNEL_CMDLINE=".*\)"/\1\ console=ttyS1,115200n8"/' \
+        /etc/default/flash-kernel
+      flash-kernel
+    fi
   fi
   
   if [ "$enable_kernel_messages" = true ]; then
