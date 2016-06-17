@@ -1,3 +1,17 @@
+ev3dev-tools (1.2.0) stable; urgency=medium
+
+  [ David Lechner ]
+  * install ev3dev-config to /usr/sbin
+
+  [ Wasabi Fan ]
+  * ev3dev-config: Fix error when on a platform with no hardware options
+
+  [ David Lechner ]
+  * ev3dev-config: Add EV3 to device tree detection
+  * ev3dev-config: Edit /etc/default/flash-kernel for input port 1 console
+
+ -- David Lechner <david@lechnology.com>  Fri, 17 Jun 2016 13:32:08 -0500
+
 ev3dev-tools (1.1.0) stable; urgency=medium
 
   * [WasabiFan] Add ev3dev-config tool.
