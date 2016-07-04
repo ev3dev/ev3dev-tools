@@ -461,7 +461,13 @@ characters, and blank spaces should be avoided.\
   NEW_HOSTNAME=$(whiptail --inputbox "Please enter the desired new hostname" 20 60 "$CURRENT_HOSTNAME" 3>&1 1>&2 2>&3)
   if [ $? -eq 0 ]; then
     hostnamectl set-hostname "$NEW_HOSTNAME"
-    ASK_TO_REBOOT=1
+    killall -SIGHUP --quiet bluetoothd || true
+    systemctl try-restart avahi-daemon.service || true
+    # FIXME: restarting nmbd takes a long time, but there does not seem to be
+    # another way to get it to pick up the new host name. e.g. `smbcontrol nmbd
+    # reload-config` does not work.
+    systemctl try-restart nmbd.service || true
+    # TODO: also need to release/renew DCHP in case DHCP server is also DNS.
   fi
 }
 
