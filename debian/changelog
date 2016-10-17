@@ -1,3 +1,10 @@
+ev3dev-tools (1.2.1) stable; urgency=medium
+
+  * ev3dev-config: Don't reboot when changing hostname
+  * ev3dev-sysinfo: Fix ev3dev-release file name
+
+ -- David Lechner <david@lechnology.com>  Sun, 16 Oct 2016 22:59:04 -0500
+
 ev3dev-tools (1.2.0) stable; urgency=medium
 
   [ David Lechner ]
