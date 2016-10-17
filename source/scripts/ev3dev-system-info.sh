@@ -13,7 +13,7 @@ case "$1" in
 esac
 
 get_ev3dev_release() {
-  if [ -e /etc/ev3dev_release ]; then
+  if [ -e /etc/ev3dev-release ]; then
     head -n 1 -q /etc/ev3dev-release
   else
     echo "** Pre-2016 release **"
