@@ -462,7 +462,7 @@ characters, and blank spaces should be avoided.\
   if [ $? -eq 0 ]; then
     hostnamectl set-hostname "$NEW_HOSTNAME"
     killall -SIGHUP --quiet bluetoothd || true
-    systemctl try-restart avahi-daemon.service || true
+    avahi-set-host-name "$NEW_HOSTNAME" || true
     # FIXME: restarting nmbd takes a long time, but there does not seem to be
     # another way to get it to pick up the new host name. e.g. `smbcontrol nmbd
     # reload-config` does not work.

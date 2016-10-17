@@ -10,7 +10,7 @@ Vcs-Browser: https://github.com/ev3dev/ev3dev-tools
 
 Package: ev3dev-tools
 Architecture: all
-Depends: flash-kernel, ${misc:Depends}
+Depends: flash-kernel, avahi-utils, ${misc:Depends}
 Description: Miscellaneous tools for ev3dev
  A collection of tools for ev3dev.
  * ev3dev-config: A graphical command line utility to help with basic system
