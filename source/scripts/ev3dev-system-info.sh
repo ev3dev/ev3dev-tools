@@ -14,7 +14,7 @@ esac
 
 get_ev3dev_release() {
   if [ -e /etc/ev3dev_release ]; then
-    head -n 1 -q  /etc/ev3dev_release
+    head -n 1 -q /etc/ev3dev-release
   else
     echo "** Pre-2016 release **"
   fi
