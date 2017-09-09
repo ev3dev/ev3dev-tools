@@ -1,3 +1,11 @@
+ev3dev-tools (1.3.0) testing; urgency=medium
+
+  * Update for stretch
+  * ev3dev-config: don't try to restart nmbd
+  * ev3dev-sysinfo: use new board-info subsystem
+
+ -- David Lechner <david@lechnology.com>  Sat, 09 Sep 2017 13:42:08 -0500
+
 ev3dev-tools (1.2.2) stable; urgency=medium
 
   * ev3dev-sysinfo: Fix ev3dev-release file name
