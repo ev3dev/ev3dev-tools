@@ -1,11 +1,11 @@
 Source: ev3dev-tools
 Priority: optional
 Maintainer: David Lechner <david@lechnology.com>
-Build-Depends: debhelper (>= 9.0.0)
-Standards-Version: 3.9.5
+Build-Depends: debhelper (>= 10)
+Standards-Version: 3.9.8
 Section: utils
 Homepage: http://www.ev3dev.org
-Vcs-Git: git://github.com/ev3dev/ev3dev-tools.git
+Vcs-Git: https://github.com/ev3dev/ev3dev-tools.git
 Vcs-Browser: https://github.com/ev3dev/ev3dev-tools
 
 Package: ev3dev-tools
