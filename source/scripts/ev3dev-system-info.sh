@@ -20,11 +20,6 @@ get_ev3dev_release() {
   fi
 }
 
-get_colon_separated_file_prop () {
-  target_line=$(grep -m1 ^"$2" "$1")
-  echo "${target_line##*: }"
-}
-
 get_package_version () {
   target_line=$(dpkg-query -s "$1" | grep -m1 ^Version)
   echo "${target_line##*: }"
@@ -63,16 +58,12 @@ print_fence_if_markdown
 
 print_val "Image file" "$(get_ev3dev_release)"
 print_val "Kernel version" "$(uname -r)"
-
-if [ -f /proc/device-tree/model ]; then
-  print_val "Board" "$(cat /proc/device-tree/model)"
-else
-  print_val "Board" "$(get_colon_separated_file_prop /proc/cpuinfo 'Hardware')"
-fi
-
-print_val "Revision" "$(get_colon_separated_file_prop /proc/cpuinfo 'Revision')"
 print_val "Brickman" "$(get_package_version brickman)"
 print_val "ev3devKit" "$(get_package_version_with_wildcard ev3devkit-\*)"
+for board in /sys/class/board-info/*; do
+  print_val "Board" "$(basename $board)"
+  cat $board/uevent
+done
 
 print_fence_if_markdown
 print_copy_line_if_markdown
