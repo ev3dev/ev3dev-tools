@@ -25,11 +25,6 @@ get_package_version () {
   echo "${target_line##*: }"
 }
 
-# dpkg-query --status doesn't accept wildcards, but --list does...
-get_package_version_with_wildcard () {
-  echo $(dpkg-query -l "$1" | grep "$1" | awk '{print $3}')
-}
-
 print_val() {
   printf "%-20s%s\n" "$1: " "$2"
 }
@@ -59,7 +54,6 @@ print_fence_if_markdown
 print_val "Image file" "$(get_ev3dev_release)"
 print_val "Kernel version" "$(uname -r)"
 print_val "Brickman" "$(get_package_version brickman)"
-print_val "ev3devKit" "$(get_package_version_with_wildcard ev3devkit-\*)"
 for board in /sys/class/board-info/*; do
   print_val "Board" "$(basename $board)"
   cat $board/uevent
