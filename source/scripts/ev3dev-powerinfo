@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+HAS_DATA=0
+
+for pwr_supply in /sys/class/power_supply/*; do
+    if [ -e "$pwr_supply/uevent" ]; then
+        HAS_DATA=1
+        echo "Power Supply Info"
+        echo "================="
+        cat $pwr_supply/uevent
+        echo
+    fi
+done
+
+if [ $HAS_DATA == 0 ]; then
+    echo "No power supply found!"
+fi
