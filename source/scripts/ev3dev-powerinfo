@@ -24,12 +24,12 @@ print_power_info() {
             intVolts=`expr $uVolts / 1000000`
             decmicroVolts=`expr $uVolts - $intVolts \* 1000000`
             decmiliVolts=`expr $decmicroVolts / 1000`
-            printf "%-20s: %3d.%03d  V\n" "Voltage" $intVolts $decmiliVolts
+            printf "%-20s: %4d.%03d  V\n" "Voltage" $intVolts $decmiliVolts
 
             uAmps=`cat $pwr_supply/current_now`
             intmiliAmps=`expr $uAmps / 1000`
             decmiliAmps=`expr $uAmps - $intmiliAmps \* 1000`
-            printf "%-20s: %3d.%03d mA\n" "Current" $intmiliAmps $decmiliAmps
+            printf "%-20s: %4d.%03d mA\n" "Current" $intmiliAmps $decmiliAmps
 
             miliVolts=`expr $intVolts \* 1000 + $decmiliVolts`
             miliAmps=`expr $intmiliAmps`
@@ -37,7 +37,7 @@ print_power_info() {
             intWatts=`expr $uWatts / 1000000`
             decmicroWatts=`expr $uWatts - $intWatts \* 1000000`
             decmiliWatts=`expr $decmicroWatts / 1000`
-            printf "%-20s: %3d.%03d  W\n" "Power" $intWatts $decmiliWatts
+            printf "%-20s: %4d.%03d  W\n" "Power" $intWatts $decmiliWatts
             echo
         else
             print_generic_info
