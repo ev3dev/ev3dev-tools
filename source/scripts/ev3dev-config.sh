@@ -11,8 +11,8 @@ MENU_BACKTITLE="Arrow keys to navigate / <ENTER> to select / <ESC> to exit menu"
 ASK_TO_REBOOT=0
 
 # Serial config =====================================================
-MODPROBE_EV3_CONF="/etc/modprobe.d/ev3.conf"
-DISABLE_IN_PORT_LINE="options legoev3_ports disable_in_port=1"
+UENV_TXT="/boot/flash/uEnv.txt"
+DISABLE_TTY1_LINE="console=tty1"
 SYSCTL_EV3_CONF="/etc/sysctl.d/ev3.conf"
 DISABLE_KERNEL_MESSAGES_LINE="kernel.printk = 0 4 1 3"
 SERIAL_SHELL_SERVICE="serial-getty@ttyS1.service"
@@ -290,12 +290,12 @@ do_hardware_menu() {
 # Serial output selection ===========================================
 detect_current_serial_config() {
   sensor_enabled=true
-  if grep -q "^\s*$DISABLE_IN_PORT_LINE" "$MODPROBE_EV3_CONF"; then
+  if grep -q "^\s*#\s*$DISABLE_TTY1_LINE" "$UENV_TXT"; then
     sensor_enabled=false
   fi
   
   messages_enabled=false
-  if grep -q "#\s*kernel\.printk = 0 4 1 3" "$SYSCTL_EV3_CONF"; then
+  if grep -q "\s*#\s*kernel\.printk" "$SYSCTL_EV3_CONF"; then
     messages_enabled=true
   fi
   
@@ -335,7 +335,7 @@ configure_in1_serial() {
   enable_shell="$2"
   
   if [ "$enable_kernel_messages" = false ] && [ "$enable_shell" = false ]; then
-    comment_line "$MODPROBE_EV3_CONF" "$DISABLE_IN_PORT_LINE"
+    uncomment_line "$UENV_TXT" "$DISABLE_TTY1_LINE"
 
     # remove console=ttyS1,115200n8 from the kernel command line
     if grep -q '^LINUX_KERNEL_CMDLINE=".*console=ttyS1,115200n8.*"' \
@@ -346,7 +346,7 @@ configure_in1_serial() {
       flash-kernel
     fi
   else
-    uncomment_line "$MODPROBE_EV3_CONF" "$DISABLE_IN_PORT_LINE"
+    comment_line "$UENV_TXT" "$DISABLE_TTY1_LINE"
 
     # add console=ttyS1,115200n8 to the kernel command line
     if ! grep -q '^LINUX_KERNEL_CMDLINE=".*console=ttyS1,115200n8.*"' \
