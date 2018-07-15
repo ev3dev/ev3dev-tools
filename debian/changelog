@@ -1,3 +1,15 @@
+ev3dev-tools (1.4.0) stable; urgency=medium
+
+  [ Tat-Chee Wan ]
+  * Add ev3dev-powerinfo script
+
+  [ David Lechner ]
+  * Drop ev3devKit version in ev3dev-sysinfo
+  * add BogoMIPS to ev3dev-sysinfo
+  * ev3dev-config: update for changes in sensor port handling in ev3dev-stretch
+
+ -- David Lechner <david@lechnology.com>  Sat, 14 Jul 2018 21:14:44 -0500
+
 ev3dev-tools (1.3.0) testing; urgency=medium
 
   * Update for stretch
