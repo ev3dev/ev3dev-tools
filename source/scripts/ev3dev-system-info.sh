@@ -54,6 +54,7 @@ print_fence_if_markdown
 print_val "Image file" "$(get_ev3dev_release)"
 print_val "Kernel version" "$(uname -r)"
 print_val "Brickman" "$(get_package_version brickman)"
+print_val $(lscpu | grep BogoMIPS | cut --field="1-2" --delimiter=":" --output-delimiter=" ")
 for board in /sys/class/board-info/*; do
   print_val "Board" "$(basename $board)"
   cat $board/uevent
