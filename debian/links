@@ -1,2 +1,3 @@
 usr/share/ev3dev-tools/ev3dev-system-info.sh usr/bin/ev3dev-sysinfo
 usr/share/ev3dev-tools/ev3dev-config.sh usr/sbin/ev3dev-config
+usr/share/ev3dev-tools/ev3dev-powerinfo.sh usr/bin/ev3dev-powerinfo
