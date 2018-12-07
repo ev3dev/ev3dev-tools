@@ -25,6 +25,11 @@ get_package_version () {
   echo "${target_line##*: }"
 }
 
+get_bluetooth_version () {
+  hciconfig -a | grep -o 'HCI Version: [[:digit:]]\.[[:digit:]]' \
+    | cut -c 14-
+}
+
 print_val() {
   printf "%-20s%s\n" "$1: " "$2"
 }
@@ -55,6 +60,7 @@ print_val "Image file" "$(get_ev3dev_release)"
 print_val "Kernel version" "$(uname -r)"
 print_val "Brickman" "$(get_package_version brickman)"
 print_val $(lscpu | grep BogoMIPS | cut --field="1-2" --delimiter=":" --output-delimiter=" ")
+print_val "Bluetooth" "$(get_bluetooth_version)"
 for board in /sys/class/board-info/*; do
   print_val "Board" "$(basename $board)"
   cat $board/uevent
